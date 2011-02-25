@@ -61,7 +61,8 @@ class views_handler_field extends views_handler {
   function query() {
     $this->ensure_my_table();
     // Add the field.
-    $this->field_alias = $this->query->add_field($this->table_alias, $this->real_field);
+    $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : array();
+    $this->field_alias = $this->query->add_field($this->table_alias, $this->real_field, NULL, $params);
 
     $this->add_additional_fields();
   }
@@ -121,7 +122,8 @@ class views_handler_field extends views_handler {
     if (isset($this->field_alias)) {
       // Since fields should always have themselves already added, just
       // add a sort on the field.
-      $this->query->add_orderby(NULL, NULL, $order, $this->field_alias);
+      $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : array();
+      $this->query->add_orderby(NULL, NULL, $order, $this->field_alias, $params);
     }
   }
 
@@ -1088,6 +1090,10 @@ If you would like to have the characters %5B and %5D please use the html entity 
     $themes[] = $hook;
 
     return $themes;
+  }
+
+  function ui_name($short = FALSE) {
+    return $this->get_field(parent::ui_name($short));
   }
 }
 
