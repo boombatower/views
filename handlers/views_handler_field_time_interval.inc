@@ -20,7 +20,7 @@ class views_handler_field_time_interval extends views_handler_field {
       '#type' => 'textfield',
       '#title' => t('Granularity'),
       '#description' => t('How many different units to display in the string.'),
-      '#default_value' => isset($this->options['granularity']) ? $this->options['granularity'] : 2,
+      '#default_value' => $this->options['granularity'],
     );
   }
 
